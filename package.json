@@ -1,0 +1,11 @@
+{
+  "name": "stock-app",
+  "private": true,
+  "workspaces": [
+    "backend",
+    "frontend"
+  ],
+  "devDependencies": {
+    "ajv": "7.2.4"
+  }
+}
