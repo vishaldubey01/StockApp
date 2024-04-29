@@ -114,6 +114,7 @@ const userRouter = router({
             select: {
               name: true,
               price: true,
+              ticker: true,
             },
           },
         },
@@ -121,6 +122,7 @@ const userRouter = router({
       return watchlist.map(entry => ({
         name: entry.stock.name,
         price: entry.stock.price,
+        ticker: entry.stock.ticker,
       }));
     } catch (e) {
       throw new TRPCError({

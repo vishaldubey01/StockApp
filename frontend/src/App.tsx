@@ -6,11 +6,10 @@ import LoginSignUp from "./app/LoginSignUp";
 function App() {
     const { user } = useAuth();
 
-    console.log(user);
     if (!user) {
         return <LoginSignUp />;
     }
-    console.log("DASHBOARD");
+
     return <Dashboard />;
 }
 
