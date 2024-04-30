@@ -1,4 +1,4 @@
-import admin, { ServiceAccount } from "firebase-admin";
+import admin from "firebase-admin";
 import { Auth } from "firebase-admin/auth";
 import * as dotenv from "dotenv";
 dotenv.config();

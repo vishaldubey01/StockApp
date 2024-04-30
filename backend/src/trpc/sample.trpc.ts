@@ -1,6 +1,5 @@
 import { z } from "zod";
 import { router, privateProcedure, publicProcedure } from "./trpc";
-import prisma from "../config/prisma";
 
 const sampleRouter = router({
   ping: privateProcedure
@@ -9,12 +8,12 @@ const sampleRouter = router({
         ping: z.string(),
       })
     )
-    .mutation(({ ctx, input }) => {
+    .mutation(({ input }) => {
       if (input.ping === "ping") {
         return "pong";
       }
     }),
-  hello: publicProcedure.query(async ({ ctx, input }) => {
+  hello: publicProcedure.query(async () => {
     return "Hello, world!";
   }),
 });

@@ -3,11 +3,8 @@ import dotenv from "dotenv";
 dotenv.config();
 import morgan from "morgan";
 import * as trpcExpress from "@trpc/server/adapters/express";
-import { expressHandler } from "trpc-playground/handlers/express";
 import { appRouter } from "./src/trpc/router";
 import { createContext } from "./src/trpc/trpc";
-import prisma from "./src/config/prisma";
-import axios from "axios";
 import { RefreshStocksCronJob } from "./src/cron/cron";
 var cors = require("cors");
 
@@ -30,9 +27,8 @@ app.get("/", (req, res) => {
 
 RefreshStocksCronJob.start();
 
-// initialize trpc on express server with playground
+// initialize trpc on express server
 const TRPC_ENDPOINT = "/trpc";
-const TRPC_PLAYGROUND_ENDPOINT = "/trpc-playground";
 app.use(
   TRPC_ENDPOINT,
   trpcExpress.createExpressMiddleware({
@@ -40,17 +36,6 @@ app.use(
     createContext,
   })
 );
-// expressHandler({
-//   trpcApiEndpoint: TRPC_ENDPOINT,
-//   playgroundEndpoint: TRPC_PLAYGROUND_ENDPOINT,
-//   router: appRouter,
-//   // uncomment this if you're using superjson
-//   // request: {
-//   //   superjson: true,
-//   // },
-// }).then((handeler: any) => {
-//   app.use(handeler);
-// });
 
 // start the express server
 app.listen(port, () => {

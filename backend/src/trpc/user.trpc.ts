@@ -132,7 +132,7 @@ const userRouter = router({
       });
     }
   }),
-  getStocks: privateProcedure.query(async ({ ctx }) => {
+  getStocks: privateProcedure.query(async () => {
     try {
       const stocks = await prisma.stocks.findMany({
         select: {
