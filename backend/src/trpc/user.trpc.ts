@@ -115,6 +115,7 @@ const userRouter = router({
               name: true,
               price: true,
               ticker: true,
+              updatedAt: true,
             },
           },
         },
@@ -123,6 +124,7 @@ const userRouter = router({
         name: entry.stock.name,
         price: entry.stock.price,
         ticker: entry.stock.ticker,
+        updatedAt: entry.stock.updatedAt,
       }));
     } catch (e) {
       throw new TRPCError({
@@ -139,6 +141,7 @@ const userRouter = router({
           name: true,
           ticker: true,
           price: true,
+          updatedAt: true,
         },
       });
       return stocks;

@@ -16,7 +16,7 @@ app.use(morgan("dev")); // for pretty logging
 app.use(
   cors({
     credentials: true,
-    origin: "http://localhost:5173", // TODO: Fix this CORS issue
+    origin: "http://localhost:5173",
   })
 );
 

@@ -1,24 +1,26 @@
-version: '3.8'
 services:
-  backend:
-    build:
-      context: ./backend
-      dockerfile: Dockerfile-backend
-    ports:
-      - '5000:5000'
-    environment:
-      - NODE_ENV=production
-    volumes:
-      - ./.env:/usr/src/app/.env # If you need to use the .env file
-    # Add other necessary environment variables or volumes here
-
   frontend:
+    # tty: true
     build:
-      context: ./frontend
-      dockerfile: Dockerfile-frontend
+      context: .
+      dockerfile: Dockerfile
+      target: frontend-build  # Specifies which stage to build up to
     ports:
-      - '3000:3000'
-    environment:
-      - NODE_ENV=production
+      - "5173:5173"  # Adjust if your frontend server uses a different port
+    # volumes:
+    #   - ./frontend/src:/usr/src/frontend/src  # For live reloading in development
     depends_on:
       - backend
+    command: ["npx", "vite", "--host", "0.0.0.0", "--port", "5173"]
+
+  backend:
+    # tty: true
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: backend-build 
+    ports:
+      - "5000:5000"  # Adjust if your backend server uses a different port
+    # volumes:
+    #   - ./backend/src:/usr/src/backend/src  # For live reloading in development
+    command: ["npm", "run", "start"]

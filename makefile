@@ -2,7 +2,7 @@
 
 # Build the project
 build:
-	docker-compose build
+	docker-compose up --build
 
 # Run the project
 up:
