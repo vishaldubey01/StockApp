@@ -22,11 +22,6 @@ WORKDIR /usr/src/frontend
 # Copy necessary backend artifacts for frontend
 COPY --from=backend-build /usr/src/backend /usr/src/backend
 
-# COPY --from=backend-build /usr/src/backend/dist /usr/src/backend/dist
-# COPY --from=backend-build /usr/src/backend/tsconfig.json /usr/src/backend/tsconfig.json
-# COPY --from=backend-build /usr/src/backend/src /usr/src/backend/src
-
-
 # Install frontend dependencies
 COPY frontend/package*.json ./
 RUN npm install
@@ -41,12 +36,10 @@ RUN npm run build
 FROM node:latest as backend-serve
 WORKDIR /usr/src/backend
 EXPOSE 5000
-RUN npm run start
-# CMD ["npm", "run", "start"]
+CMD ["npm", "run", "start"]
 
 # Stage 4: Serve the Frontend
 FROM node:latest as frontend-serve
 WORKDIR /usr/src/frontend
 EXPOSE 5173
-RUN npx vite --host 0.0.0.0 --port 5173
-# CMD ["npx", "vite"]
+CMD ["npx", "vite", "--host", "0.0.0.0", "--port", "5173"]
