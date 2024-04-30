@@ -31,6 +31,7 @@ This application is built using a **React frontend** with **Vite** for bundling 
 ### Future Enhancements
 
 -   Add multiple authentication providers such as Google to provide more optionality for users
+-   Better account level support such as updating password, setting a profile picture, or deleting account
 -   Charts to show historical stock prices to provide more information for users
 -   Percentage change feature that allows users to see the change in price for a given stock since they added it to their watchlist
 -   Pagination support to improve performance in a production environment with thousands of stocks
