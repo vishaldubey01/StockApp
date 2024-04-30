@@ -28,7 +28,7 @@ app.get("/", (req, res) => {
   res.send("hello, world!");
 });
 
-// RefreshStocksCronJob.start();
+RefreshStocksCronJob.start();
 
 // initialize trpc on express server with playground
 const TRPC_ENDPOINT = "/trpc";

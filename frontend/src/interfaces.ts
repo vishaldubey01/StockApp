@@ -1,4 +1,4 @@
-import { User } from "../src/config/api"; //type User import
+import { RouterOutput, User } from "../src/config/api"; //type User import
 
 export interface LoginFormValues {
     email: string;
@@ -21,3 +21,5 @@ export interface IAuth {
     SignOut: () => void;
     refetchUserData: () => Promise<void>;
 }
+
+export type Stock = RouterOutput["user"]["getStocks"][number];

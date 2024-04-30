@@ -8,8 +8,9 @@ import {
     FirebaseSignOut,
     FirebaseSignUp,
 } from "../firebase/AuthService";
-import toast, { Toaster } from "react-hot-toast";
-import { trpcDirect, User } from "../config/api";
+import toast from "react-hot-toast";
+import { trpcDirect, trpcQuery, User } from "../config/api";
+import PageLoading from "../app/components/PageLoading";
 
 const AuthContext = createContext<IAuth>({
     user: null,
@@ -24,6 +25,8 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const [user, setUser] = useState<User | null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [isAuthLoading, setIsAuthLoading] = useState<boolean>(true);
+
+    const utils = trpcQuery.useUtils();
 
     //Sign up
     const SignUp = async (creds: UserFormValues) => {
@@ -98,10 +101,12 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         try {
             await FirebaseSignOut();
             setUser(null);
-            // navigate("/signin", { replace: true });
+            await Promise.all([
+                utils.user.getStocks.invalidate(),
+                utils.user.getWatchlist.invalidate(),
+            ]);
         } catch (error) {
             setIsLoading(false);
-            //show error alert
         }
     };
 
@@ -149,7 +154,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     };
 
     //If loading for the first time when visiting the page
-    if (isAuthLoading) return <h3>Loading</h3>;
+    if (isAuthLoading) return <PageLoading />;
 
     return (
         <AuthContext.Provider value={authValues}>

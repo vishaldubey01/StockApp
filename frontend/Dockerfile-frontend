@@ -1,0 +1,26 @@
+# Start from a node base image
+FROM node:latest
+
+# Set the working directory in the container
+WORKDIR /usr/src/app
+
+# Copy package.json and package-lock.json
+COPY frontend/package*.json ./
+
+# Install dependencies
+RUN npm install
+
+# Copy the rest of the frontend source code
+COPY frontend/ .
+
+# Build the app
+RUN npm run build
+
+# Install a simple http server to serve static content
+RUN npm install -g serve
+
+# Expose the port the static server runs on
+EXPOSE 3000
+
+# Serve the static files
+CMD ["serve", "-s", "build"]

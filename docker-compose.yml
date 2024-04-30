@@ -1,0 +1,24 @@
+version: '3.8'
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile-backend
+    ports:
+      - '5000:5000'
+    environment:
+      - NODE_ENV=production
+    volumes:
+      - ./.env:/usr/src/app/.env # If you need to use the .env file
+    # Add other necessary environment variables or volumes here
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile-frontend
+    ports:
+      - '3000:3000'
+    environment:
+      - NODE_ENV=production
+    depends_on:
+      - backend

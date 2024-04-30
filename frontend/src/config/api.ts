@@ -11,7 +11,7 @@ import { firebaseAuth } from "../firebase/FirebaseConfig";
 
 // Figure out the base URL of the API
 // Get the URL of the development server
-const BASE_URL = "http://localhost:3000";
+const BASE_URL = "http://localhost:5000";
 const TRPC_BASE_URL = `${BASE_URL}/trpc`;
 
 const getHeaders = async () => {

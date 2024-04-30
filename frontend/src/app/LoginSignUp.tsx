@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import { useAuth } from "../store/AuthContext";
 import { trpcDirect } from "../config/api";
+import Input from "@mui/joy/Input";
+import Button from "@mui/joy/Button";
 
 const LoginSignUpPage = () => {
     const [isSignUp, setIsSignUp] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [firstName, setFirstName] = useState("");
@@ -12,6 +15,7 @@ const LoginSignUpPage = () => {
     const { SignIn, SignUp } = useAuth();
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        setIsLoading(true);
         e.preventDefault();
         if (isSignUp) {
             await SignUp({ email, password, firstName, lastName });
@@ -19,6 +23,7 @@ const LoginSignUpPage = () => {
             await SignIn({ email, password });
             await trpcDirect.user.getCurrentUser.query();
         }
+        setIsLoading(false);
     };
 
     return (
@@ -31,7 +36,7 @@ const LoginSignUpPage = () => {
                         </h2>
                     </div>
                     <form className='space-y-6' onSubmit={handleSubmit}>
-                        <input
+                        <Input
                             type='email'
                             name='email'
                             value={email}
@@ -40,7 +45,7 @@ const LoginSignUpPage = () => {
                             required
                             className='w-full px-3 py-2 border border-gray-300 rounded-md'
                         />
-                        <input
+                        <Input
                             type='password'
                             name='password'
                             value={password}
@@ -50,8 +55,8 @@ const LoginSignUpPage = () => {
                             className='w-full px-3 py-2 border border-gray-300 rounded-md'
                         />
                         {isSignUp && (
-                            <div className='flex-row w-full'>
-                                <input
+                            <div className='flex flex-row w-full'>
+                                <Input
                                     type='text'
                                     name='firstName'
                                     value={firstName}
@@ -62,7 +67,7 @@ const LoginSignUpPage = () => {
                                     className='px-3 py-2 border border-gray-300 rounded-md mr-2'
                                 />
 
-                                <input
+                                <Input
                                     type='text'
                                     name='lastName'
                                     value={lastName}
@@ -74,21 +79,25 @@ const LoginSignUpPage = () => {
                                 />
                             </div>
                         )}
-                        <button
+                        <Button
                             type='submit'
-                            className='w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
+                            variant='solid'
+                            className='w-full'
+                            loading={isLoading}
+                            // className='w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
                         >
                             {isSignUp ? "Sign Up" : "Login"}
-                        </button>
-                        <button
+                        </Button>
+                        <Button
                             type='button'
+                            variant='plain'
                             onClick={() => setIsSignUp(!isSignUp)}
                             className='w-full flex justify-center py-2 px-4 border-transparent rounded-md text-md font-medium text-indigo-600 bg-transparent'
                         >
                             {isSignUp
                                 ? "Already have an account? Login"
                                 : "Don't have an account? Sign Up"}
-                        </button>
+                        </Button>
                     </form>
                 </div>
             </div>

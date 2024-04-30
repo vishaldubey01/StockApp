@@ -1,6 +1,8 @@
 import prisma from "../config/prisma";
 import { fetchPrices, fetchTickers } from "./stocks.service";
 
+let counter = 0;
+
 export async function refreshStockData() {
   try {
     // console.log("Fetching tickers and prices from API");
@@ -29,15 +31,17 @@ export async function refreshStockData() {
           ticker: stock.ticker,
         },
         update: {
-          price: stock.price,
+          price: stock.price + counter,
         },
         create: {
           ticker: stock.ticker,
           name: stock.name,
-          price: stock.price,
+          price: stock.price + counter,
         },
       });
     });
+
+    counter += 1;
 
     console.log("Finished upserting stock tickers and prices to DB");
 

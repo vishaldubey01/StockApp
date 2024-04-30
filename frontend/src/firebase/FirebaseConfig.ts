@@ -1,5 +1,10 @@
 import { initializeApp, getApps, FirebaseApp, getApp } from "firebase/app";
-import { initializeAuth, getAuth, Auth } from "firebase/auth";
+import {
+    initializeAuth,
+    getAuth,
+    Auth,
+    browserLocalPersistence,
+} from "firebase/auth";
 import { getStorage } from "firebase/storage";
 
 // Initialize Firebase
@@ -10,18 +15,14 @@ const firebaseConfig = {
     storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
     messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
     appId: import.meta.env.VITE_FIREBASE_APP_ID,
-    // measurementId: process.env.VITE_FIREBASE_MEASUREMENT_ID,
 };
-
-console.log(import.meta.env.VITE_FIREBASE_API_KEY);
-// console.log(process.env.VITE_FIREBASE_API_KEY);
 
 let firebaseApp: FirebaseApp;
 let firebaseAuth: Auth;
 if (getApps().length === 0) {
     firebaseApp = initializeApp(firebaseConfig);
     firebaseAuth = initializeAuth(firebaseApp, {
-        // persistence: getReactNativePersistence(AsyncStorage),
+        persistence: browserLocalPersistence,
     });
 } else {
     firebaseApp = getApp();

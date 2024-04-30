@@ -2,13 +2,9 @@ import {
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
     signOut,
-    setPersistence,
-    browserLocalPersistence,
 } from "firebase/auth";
 import { firebaseAuth } from "./FirebaseConfig";
 import { LoginFormValues, UserFormValues } from "../interfaces";
-
-setPersistence(firebaseAuth, browserLocalPersistence);
 
 //Sign in functionality
 export const FirebaseSignIn = async ({ email, password }: LoginFormValues) => {
